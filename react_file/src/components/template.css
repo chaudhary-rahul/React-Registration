@@ -1,0 +1,72 @@
+.mysignup{
+    position: absolute;
+    display: inline-block;
+    height: 590px;
+    width: 800px;
+    background-color: white;
+    margin: auto;
+    margin-top: 35px;
+    margin-left: 460px;
+    border-radius: 30px 30px 30px 30px;
+    box-shadow: 0 5px 30px rgba(0, 0, 0, 0.9);
+}.my_form {
+    display: inline-block;
+    background-color: white;
+    color: black;
+    margin-top: 60px;
+    width: 80%;
+    /* margin-left: 350px; */
+  }
+  .my_form h2 {
+    display: inline;
+    font-size: 30px;
+    text-align: center;
+    margin-left: 90px;
+    color: black;
+    font-weight: bolder;
+    font-family: "Lucida Sans";
+  }
+  .my_inputfieds {
+    margin-top: 50px;
+    margin-bottom: 30px;
+    width: 90%;
+  }
+
+  .my_inputfieds input {
+  
+    font-size: 20px;
+    width: 80%;
+    display:inline-block;
+    padding: 8px;
+    margin: 10px 0 0 150px;
+    border: none;
+    color: black;
+    border-radius: 10px;
+    border-bottom: 2px solid dodgerblue;
+    background-color: rgba(237, 237, 237, 0.9);
+  }
+  .my_form #textfields_text{
+    padding: 0%;
+    width: 84%;
+    height: 200px;
+    word-wrap: break-word;
+  }
+  .my_form input:focus {
+    outline: 2px solid blue;
+    border: none;
+  }
+  .my_form button {
+    display: block;
+    margin: 30px 0 0 150px;
+    width: 85%;
+    font-size: 20px;
+    padding: 8px;
+    border-radius: 10px;
+    background-color: blue;
+    color: white;
+    border: none;
+  }
+  .my_form button:hover {
+    background-color: green;
+    color: white;
+  }

@@ -1,0 +1,266 @@
+old signup code
+
+import { useState } from "react";
+import {useNavigate} from 'react-router-dom';
+const Signup = () => {
+  const navigate = useNavigate();
+  const [data, setData] = useState({
+    full_name: "",
+    email: "",
+    password: "",
+  });
+  function myFunction(e) {
+    // const newdata = [...data ];
+    // newdata[e.target.id] = e.target.value;
+    // setData(newdata);
+    let name = e.target.name;
+    let value = e.target.value
+    setData({...data,[name]:value})
+
+  }
+ 
+ const handleSubmit=()=>{
+  const requestOptions = {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ title: 'Fetch POST Request Example' })
+};
+  fetch('localhost:4000/signup', requestOptions)
+    .then(response => response.json())
+    .then(data => console.log(data));
+ }
+  return (
+    <>
+      <div className="shadow-part">
+        <div className="content">
+          <a>Composely.in</a>
+
+          <h4>
+            Get started comminishing <br />
+            high quality content
+          </h4>
+          <br></br>
+          <i className="fa fa-save"></i>
+          <h3>Hire the top 1% of writers</h3>
+          <p>
+            less than 1% of applicants meet our standards <br /> because we only
+            need perfections
+          </p>
+          <i className="fa fa-cog"></i>
+          <h3>Save Time and Money</h3>
+          <br />
+          <p id="p2">
+            save an average 80% of content budget in
+            <br /> comparison with high hiring in-house staff
+          </p>
+          <i className="fa fa-user"></i>
+          <h3>Money Back Gaurantee</h3>
+          <p>
+            If you're not happy with the final content
+            <br />
+            you'll get your money back
+          </p>
+        </div>
+      </div>
+      <div className="signup" >
+        <div className="logback">
+          <p id="logs">Already Have an account ?</p>
+          <button id="login" onClick={()=>navigate("/mylogin")}>SignIn</button>
+        </div>
+        <form className="myform" onSubmit={handleSubmit}>
+          <h2>create your free account</h2>
+          <div className="inputfieds">
+            <input placeholder="Enter Your Full Name" 
+            type={"text"} name="full_name" required
+            onChange={myFunction}
+            value={data.full_name} />
+
+            <input placeholder="Enter Your Email " 
+            type={"email"} name="email" required
+            value={data.email}
+           
+            onChange={myFunction} />
+            <input
+              placeholder="Enter Your Password"
+              type={"password"}
+              name="password"
+              onChange={myFunction}
+             
+              value={data.password}
+              required
+            />
+            <input
+              placeholder="Confirm Your Password"
+              type={"password"}
+              onChange={myFunction}
+              
+              required
+            />
+            <button type={"submit"}  >Register</button>
+          </div>
+        </form>
+        <div className="message">
+          <p id="apply">Are you a writer looking to write</p>
+          <br></br>
+          <a id="linkapply">Click here to apply</a>
+        </div>
+      </div>
+    </>
+  );
+};
+export default Signup;
+
+
+
+old login codee
+
+import { useEffect, useState } from "react";
+import {useNavigate} from 'react-router-dom';
+import React from "react";
+
+const Login = () => {
+  const navigate = useNavigate();
+  const [email, setEmail] = useState();
+  const [password, setPassword] = useState();
+  const [details, setDetails] = useState([]);
+  useEffect(() => {
+    fetch('http://localhost:3000/login')
+      .then((res) => res.json())
+      .then((data) => setDetails(data.data));
+  }, []);
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const result = details.find((elem) => elem.email === email && elem.password === password);
+      //  console.log(result)
+     
+    if(result){
+      console.log("data matched");
+      navigate("/mytemplate")
+     
+    }
+    else{
+     console.log("data not matched")
+    }
+  };
+ 
+  return (
+    <>
+      <div className="shadow-part">
+        <div className="content">
+          <a>Composely.in</a>
+          <h4>
+            Get started comminishing <br />
+            high quality content
+          </h4>
+          <br></br>
+          <h3>Hire the top 1% of writers</h3>
+          <p>
+            less than 1% of applicants meet our standards <br /> because we only
+            need perfections
+          </p>
+          <h3>Save Time and Money</h3>
+          <br />
+          <p id="p2">
+            save an average 80% of content budget in
+            <br /> comparison with high hiring in-house staff
+          </p>
+          <h3>Money Back Gaurantee</h3>
+          <p>
+            If you're not happy with the final content
+            <br />
+            you'll get your money back
+          </p>
+        </div>
+      </div>
+      <div className="signup">
+        <div className="logback">
+          <p id="logs">Don't Have an account ?</p>
+          <button id="login" onClick={()=>navigate("/")}>SignUp</button>
+        </div>
+        <form className="myform" action="/" method="post" onSubmit={handleSubmit}>
+          <h2>Login to your account</h2>
+          <div className="inputfieds">
+            <input
+              placeholder="Enter Your Email "
+              type={"email"}
+              name="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              required
+            />
+            <input
+              placeholder="Enter Your Password"
+              type={"password"}
+              name="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              required
+            />
+
+            <button type={"submit"}>
+              Login Now
+            </button>
+          </div>
+        </form>
+
+        <div className="message">
+          <p id="apply">Are you a writer looking to write</p>
+          <br></br>
+          <a id="linkapply">Click here to apply</a>
+        </div>
+      </div>
+    </>
+  );
+};
+
+export default Login;
+
+
+server code 
+
+
+const express = require('express');
+const cors = require('cors');
+const form = express()
+form.use(express.json());
+const port = 4000
+const pool = require('./database')
+const bodyParser = require('body-parser')
+form.use(bodyParser.urlencoded({ extennoded: false }));
+
+form.use(
+    cors()
+)
+
+
+form.post('/login',pool.getuser)
+form.post('/signup',  (req, res) => {
+    const full_name = req.body.full_name;
+    const email = req.body.email;
+    const password = req.body.password ;
+  
+    console.log("full_name " + full_name);
+    console.log("email " + email);
+    console.log("password " + password);
+  
+    const insertqry = `INSERT INTO users (full_name,email,password) 
+                              VALUES ('${full_name}', '${email}','${password}');`;
+  
+    pool
+      .query(insertqry)
+      .then((response) => {
+        console.log("Data Saved");
+        console.log(response.json());
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  
+    console.log(req.body);
+    res.send("data recieved");
+  });
+  
+form.post('/savemail',pool.savemail)
+form.listen(port,()=>{
+    console.log(`server is running on port  ${port}`)
+})
